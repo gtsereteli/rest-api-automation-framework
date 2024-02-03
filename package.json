@@ -1,0 +1,28 @@
+{
+  "name": "restapi-mocha",
+  "version": "1.0.0",
+  "description": "Rest API Automation",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha './**/*.test.js'",
+    "test:gorest": "mocha './test/gorest/*.test.js'",
+    "test:github": "mocha './test/github/*.test.js'",
+    "test:dummy": "mocha './test/dummy/*.test.js'",
+    "test:trello": "mocha './test/trello/*.test.js'",
+    "debug": "NODE_DEBUG=request npm run test"
+  },
+  "mocha": {
+    "slow": 3000,
+    "timeout": 10000
+  },
+  "keywords": [],
+  "author": "Giorgi Tsereteli",
+  "license": "ISC",
+  "dependencies": {
+    "@faker-js/faker": "^7.4.0",
+    "chai": "^4.3.6",
+    "dotenv": "^16.0.1",
+    "mocha": "^10.0.0",
+    "request-promise": "^4.2.6"
+  }
+}
