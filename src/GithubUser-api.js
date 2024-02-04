@@ -6,7 +6,7 @@ const baseUrl = "https://api.github.com";
 class GithubUser {
   // Constructor for initializing the GitHubUser instance
   constructor() {
-    // Creating a customized instance of 'request' with default configurations
+    // Creating instance of 'request' with default configurations
     this.request = request.defaults({
       json: true,
       headers: {

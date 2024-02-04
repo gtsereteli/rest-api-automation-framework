@@ -3,15 +3,18 @@ const UserApi = require("../../src/Gorest-api");
 const guard = require("../../utils/guard");
 const factory = require("../../src/factory/gorest-factory");
 
+// Initializing GoRest instances for authenticated and unauthenticated use
 let api;
 let unAuthApi;
 
+// Setup to be performed once before all tests
 before(() => {
   api = new UserApi();
   api.authenticate();
   unAuthApi = new UserApi();
 });
 
+// Test cleanup tasks to be performed after each test
 afterEach(async () => {
   const usersToBeDeleted = await api.getAllUsers({
     email: factory.qaPrefix,
@@ -24,6 +27,13 @@ afterEach(async () => {
   );
 });
 
+/**
+ * Test Suite: GoRest users api tests
+ *
+ * Purpose:
+ * This block contains different positive/negative scenarios to verify CRUD operations
+ * on the GoRest API. This is a basic endpoint for practice purposes
+ */
 describe("GoRest users api tests (/users)", () => {
   let createUserResponse;
 
@@ -44,25 +54,27 @@ describe("GoRest users api tests (/users)", () => {
       expect(createUserResp).to.have.property("status", newUserInfo.status);
     });
 
-    const userNameTestScenarios = [
-      "John",
-      "John Doe",
-      "hyfjrugnfhkqilofprhysuhgjtnbsyehwjwuqkdshbbtjsnwikasd",
-      "Johnny Ca$h",
-      "John O'",
-    ];
+    describe("Can create users with different name length", () => {
+      const userNameTestScenarios = [
+        "John",
+        "John Doe",
+        "hyfjrugnfhkqilofprhysuhgjtnbsyehwjwuqkdshbbtjsnwikasd",
+        "Johnny Ca$h",
+        "John O'",
+      ];
 
-    userNameTestScenarios.forEach(function (name) {
-      it(`(DD) Can create users with different name length: char count ${name.length}`, async () => {
-        const payload = {
-          ...factory.user(),
-          name: name,
-        };
-        const userCreateResponse = await api.createUser(payload);
+      userNameTestScenarios.forEach(function (name) {
+        it(`(DD) Name character count: ${name.length}`, async () => {
+          const payload = {
+            ...factory.user(),
+            name: name,
+          };
+          const userCreateResponse = await api.createUser(payload);
 
-        expect(userCreateResponse).to.have.property("name", name);
+          expect(userCreateResponse).to.have.property("name", name);
+        });
       });
-    });
+    })
 
     it("Error is returned without auth token", async function () {
       const error = await guard(async () => unAuthApi.createUser(factory.user()));
@@ -79,7 +91,7 @@ describe("GoRest users api tests (/users)", () => {
       expect(error.error).to.be.eql([
         { field: "email", message: "can't be blank" },
         { field: "name", message: "can't be blank" },
-        { field: "gender", message: "can't be blank, can be male of female" }, // typo in api response where it says of
+        { field: "gender", message: "can't be blank, can be male of female" }, // Typo in response where it says 'of'
         { field: "status", message: "can't be blank" },
       ]);
     });
@@ -129,20 +141,11 @@ describe("GoRest users api tests (/users)", () => {
 
   describe("Get all users (GET /users)", () => {
     it("Can get last 10 users", async function () {
-      await Promise.all([
-        api.createUser(factory.user()),
-        api.createUser(factory.user()),
-        api.createUser(factory.user()),
-        api.createUser(factory.user()),
-        api.createUser(factory.user()),
-        api.createUser(factory.user()),
-        api.createUser(factory.user()),
-        api.createUser(factory.user()),
-        api.createUser(factory.user()),
-        api.createUser(factory.user()),
-        api.createUser(factory.user()),
-        api.createUser(factory.user()),
-      ]);
+
+      const numberOfUsers = 12; // Set the desired number of users
+      await Promise.all(
+        Array.from({ length: numberOfUsers }, () => api.createUser(factory.user()))
+      );
       const getAllUsersResp = await api.getAllUsers();
 
       expect(getAllUsersResp).to.be.an("array").that.has.lengthOf(10);

@@ -13,9 +13,8 @@ before(() => {
  * Test Suite: Can get GitHub user info
  *
  * Purpose:
- * This describe block contains a test case that validates the GitHub User API's ability
- * to retrieve user information based on a specific GitHub username. The test case verifies
- * that the returned user information has the expected properties and values.
+ * This test case validates the GitHub User API's ability
+ * to retrieve correct user information based on a specific GitHub username
  */
 describe("Can get GitHub user info", function () {
   it("Can get user by username", async function () {

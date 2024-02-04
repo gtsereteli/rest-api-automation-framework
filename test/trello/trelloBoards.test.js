@@ -3,20 +3,28 @@ const TrelloApi = require("../../src/Trello-api");
 const guard = require("../../utils/guard");
 const factory = require("../../src/factory/trello-factory");
 
+// Initializing TrelloApi instances for authenticated and unauthenticated use
 let api;
 let unAuthApi;
 
+// Setup to be performed once before all tests
 before(() => {
+  // Creating an authenticated instance
   api = new TrelloApi();
   api.authenticate();
+
+  // Creating an unauthenticated instance
   unAuthApi = new TrelloApi();
 });
 
+// Test cleanup tasks to be performed after each test
 afterEach(async () => {
+  // Retrieving boards with a specific description prefix for cleanup
   const boardsToBeDeleted = await api.getAllBoards({
     desc: factory.qaPrefix,
   });
 
+  // Deleting each board in parallel
   await Promise.all(
     boardsToBeDeleted.map((board) => {
       return api.deleteBoard(board.id);
@@ -24,6 +32,14 @@ afterEach(async () => {
   );
 });
 
+/**
+ * Test Suite: Trello boards api tests
+ *
+ * Purpose:
+ * This describe block contains different suites with test cases to verify Trello boards api.
+ * I added set of positive/negative scenarios to ensure the reliability of CRUD operations.
+ * The test cases cover verifications of different errors as well as few edge cases
+ */
 describe("Trello boards api tests (/boards)", () => {
   let createBoardResponse;
 
