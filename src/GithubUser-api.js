@@ -1,12 +1,14 @@
+require("dotenv").config();
 const request = require("request-promise");
 
-const baseUrl = "https://api.github.com";
+// Extracting environment variables
+const { GITHUB_HOST } = process.env;
 
 // Class representing the GitHub User API wrapper
 class GithubUser {
-  // Constructor for initializing the GitHubUser instance
   constructor() {
     // Creating instance of 'request' with default configurations
+    this.baseUrl = GITHUB_HOST;
     this.request = request.defaults({
       json: true,
       headers: {
@@ -24,8 +26,8 @@ class GithubUser {
    * @returns {Promise<object>} A Promise that resolves to the user information object.
    */
   getUser(username) {
-    const path = `${baseUrl}/users/${username}`;
-
+    const path = `${this.baseUrl}/users/${username}`;
+    console.log(path);
     return this.request.get({
       url: path,
     });

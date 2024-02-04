@@ -98,7 +98,7 @@ describe("Trello boards api tests (/boards)", () => {
       expect(error).to.have.property("error", "Internal Server Error");
     });
 
-    it("Error returned when creating a board and required prop(Board name) is missing from the request)", async () => {
+    it("Error returned when creating a board and required prop(Board name) length is 0)", async () => {
       const payload = {
         ...factory.board(),
         name: "",
@@ -121,15 +121,15 @@ describe("Trello boards api tests (/boards)", () => {
       expect(createBoardResp).to.have.property("name", payload.name);
     });
 
-    describe("(DD) Can create board using different board name and description lengths", () => {
+    describe("(DD) Can create board using different name and description lengths", () => {
       const boardNameDescLengthTestScenarios = [
-        factory.maxStringLength,
-        factory.avgStringLength,
         factory.minStringLength,
+        factory.avgStringLength,
+        factory.maxStringLength,
       ];
 
       boardNameDescLengthTestScenarios.forEach((randomString) => {
-        it(`(DD) Board name and description length: ${randomString.length} chars`, async () => {
+        it(`(DD) Board name and desc length: ${randomString.length} chars`, async () => {
           const payload = {
             ...factory.board(),
             name: randomString,
@@ -138,12 +138,8 @@ describe("Trello boards api tests (/boards)", () => {
           const createBoardResponse = await api.createBoard(payload);
 
           expect(createBoardResponse).to.have.property("id").that.is.a("string");
-          expect(createBoardResponse)
-            .to.have.property("name", randomString)
-            .that.has.lengthOf(randomString.length);
-          expect(createBoardResponse)
-            .to.have.property("desc", randomString)
-            .that.has.lengthOf(randomString.length);
+          expect(createBoardResponse).to.have.property("name", randomString);
+          expect(createBoardResponse).to.have.property("desc", randomString);
         });
       });
     });
@@ -155,10 +151,10 @@ describe("Trello boards api tests (/boards)", () => {
       expect(error).to.have.property("error", "unauthorized permission requested");
     });
 
-    describe("(DD) Error is returned when sending create call with invalid name length", () => {
+    describe('(DD) Error is returned when creating a board with invalid "name" prop length', () => {
       const boardNameLengthTestScenarios = [
-        factory.maxStringLength.concat(factory.customStringLength(1)),
-        factory.maxStringLength.concat(factory.customStringLength(1000)),
+        factory.maxStringLength.concat(factory.generateString(1)),
+        factory.maxStringLength.concat(factory.generateString(1000)),
         "",
       ];
 
@@ -187,7 +183,7 @@ describe("Trello boards api tests (/boards)", () => {
       const getBoardResponse = await api.getBoard(createBoardResponse.id);
 
       expect(getBoardResponse).to.be.an("object");
-      expect(getBoardResponse).to.have.property("id", createBoardResponse.id).that.is.a("string");
+      expect(getBoardResponse).to.have.property("id", createBoardResponse.id);
       expect(getBoardResponse)
         .to.have.property("name", createBoardResponse.name)
         .that.is.a("string");
@@ -220,18 +216,10 @@ describe("Trello boards api tests (/boards)", () => {
 
   describe("Get all boards (GET /1/members/{id}/boards))", () => {
     it("Can get all boards associated with a user", async () => {
-      await Promise.all([
-        api.createBoard(factory.board()),
-        api.createBoard(factory.board()),
-        api.createBoard(factory.board()),
-        api.createBoard(factory.board()),
-        api.createBoard(factory.board()),
-        api.createBoard(factory.board()),
-        api.createBoard(factory.board()),
-        api.createBoard(factory.board()),
-        api.createBoard(factory.board()),
-        api.createBoard(factory.board()),
-      ]);
+      // Generate an array of 10 slots and map over generated boards
+      const boardsArray = Array(10).fill(10).map(() => factory.board());
+      // Asynchronously create all boards using values from boardsArray
+      await Promise.all(boardsArray.map(board => api.createBoard(board)));
       const getAllBoardsResp = await api.getAllBoards();
 
       expect(getAllBoardsResp).to.be.an("array").that.has.lengthOf(10);
@@ -244,16 +232,16 @@ describe("Trello boards api tests (/boards)", () => {
 
     it("Can filter a list of boards by board prop(s)", async () => {
       const boardName = "QA Engineer";
-      const bordDesc = `Deleted code is debugged code.`;
+      const boardDesc = `Deleted code is debugged code.`;
       const boardInfo = {
         ...factory.board(),
         name: `${boardName}`,
-        desc: `${bordDesc}`,
+        desc: `${boardDesc}`,
       };
       const createBoardResponse = await api.createBoard(boardInfo);
       const getAllBoardsResp = await api.getAllBoards({
         name: `${boardName}`,
-        desc: `${bordDesc}`,
+        desc: `${boardDesc}`,
       });
 
       expect(getAllBoardsResp[0]).to.have.property("id", createBoardResponse.id);
@@ -261,7 +249,7 @@ describe("Trello boards api tests (/boards)", () => {
       expect(getAllBoardsResp[0]).to.have.property("desc", createBoardResponse.desc);
     });
 
-    it("Can get zero count when sending get all boards call and no boards are present", async () => {
+    it("Empty array of boards is returned when user doesn't have any boards", async () => {
       const getAllBoardsResp = await api.getAllBoards();
 
       expect(getAllBoardsResp).to.be.an("array").that.is.empty;
@@ -273,7 +261,7 @@ describe("Trello boards api tests (/boards)", () => {
       createBoardResponse = await api.createBoard(factory.board());
     });
 
-    it("Can update single board props by using board ID", async () => {
+    it("Can update board props by using board ID", async () => {
       const payload = {
         ...factory.board(),
         name: "QA Engineer Responsibilities",
@@ -286,7 +274,7 @@ describe("Trello boards api tests (/boards)", () => {
       expect(updateBoardResponse).to.have.property("desc", payload.desc);
     });
 
-    it("Error is returned when trying to send update call for previously deleted board", async () => {
+    it("Error is returned when attempting to update previously deleted board", async () => {
       await api.deleteBoard(createBoardResponse.id, true);
       const boardUpdateInfo = {
         ...factory.board(),
@@ -323,7 +311,7 @@ describe("Trello boards api tests (/boards)", () => {
       });
     });
 
-    it.skip("Error is returned when sending update call for private board", async () => {
+    it.skip("Error is returned when user updates private board", async () => {
       // Response comes with different status codes 200/400. Research what is the issue
       const createBoardPayload = {
         ...factory.board(),
