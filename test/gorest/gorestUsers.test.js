@@ -2,6 +2,10 @@ const { expect } = require("chai");
 const UserApi = require("../../src/Gorest-api");
 const guard = require("../../utils/guard");
 const factory = require("../../src/factory/gorest-factory");
+const validateJsonSchema = require('../../utils/jsonSchemaValidator');
+
+// JSON Schemas
+const createUserSchema = require('../../schemas/gorest/createUserSchema.json');
 
 // Initializing GoRest instances for authenticated and unauthenticated use
 let api;
@@ -46,7 +50,9 @@ describe("GoRest users api tests (/users)", () => {
         status: "active",
       };
       const createUserResp = await api.createUser(newUserInfo);
+      const isSchemaValid = validateJsonSchema(createUserResp, createUserSchema);
 
+      expect(isSchemaValid).to.be.true;
       expect(Object.keys(createUserResp).length).to.equal(5);
       expect(createUserResp).to.have.property("id").that.is.a("number");
       expect(createUserResp).to.have.property("name", newUserInfo.name);

@@ -2,6 +2,10 @@ const { expect } = require("chai");
 const TrelloApi = require("../../src/Trello-api");
 const guard = require("../../utils/guard");
 const factory = require("../../src/factory/trello-factory");
+const validateJsonSchema = require('../../utils/jsonSchemaValidator');
+
+// JSON Schemas
+const createBoardSchema = require('../../schemas/trello/createBoardSchema.json');
 
 // Initializing TrelloApi instances for authenticated and unauthenticated use
 let api;
@@ -54,7 +58,9 @@ describe("Trello boards api tests (/boards)", () => {
         desc: `${factory.qaPrefix}This is happy path for creating board`,
       };
       const createBoardResp = await api.createBoard(payload);
+      const isSchemaValid = validateJsonSchema(createBoardResp, createBoardSchema);
 
+      expect(isSchemaValid).to.be.true;
       expect(Object.keys(createBoardResp).length).to.equal(13);
       expect(createBoardResp).to.have.property("id").that.is.a("string");
       expect(createBoardResp).to.have.property("name", payload.name);

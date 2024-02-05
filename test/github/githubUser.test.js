@@ -1,5 +1,8 @@
 const { expect } = require("chai");
 const Api = require("../../src/GithubUser-api");
+const validateJsonSchema = require('../../utils/jsonSchemaValidator');
+
+const getUserSchema = require('../../schemas/github/getGithubUserShema.json');
 
 // Variable to hold the instance of the Api class
 let api;
@@ -20,8 +23,9 @@ describe("Can get GitHub user info", function () {
   it("Can get user by username", async function () {
     const username = "gtsereteli";
     const response = await api.getUser(username);
+    const isSchemaValid = validateJsonSchema(response, getUserSchema);
 
-    expect(response).to.have.property("id").that.is.a("number");
+    expect(isSchemaValid).to.be.true;
     expect(response).to.have.property("login", username);
     expect(response).to.have.property("name", "Giorgi Tsereteli");
     expect(response).to.have.property("type", "User");
