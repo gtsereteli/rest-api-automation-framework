@@ -9,6 +9,7 @@
     "test:github": "mocha './test/github/*.test.js'",
     "test:dummy": "mocha './test/dummy/*.test.js'",
     "test:trello": "mocha './test/trello/*.test.js'",
+    "test:report": "mocha './**/*.test.js' --reporter mochawesome --reporter-options reportDir=reports",
     "debug": "NODE_DEBUG=request npm run test"
   },
   "mocha": {
@@ -23,6 +24,8 @@
     "chai": "^4.3.6",
     "dotenv": "^16.0.1",
     "mocha": "^10.0.0",
+    "mochawesome": "^7.1.3",
+    "mochawesome-report-generator": "^6.2.0",
     "request-promise": "^4.2.6"
   }
 }
