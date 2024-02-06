@@ -89,7 +89,7 @@ describe("GoRest users api tests (/users)", () => {
       expect(error.error).to.have.property("message", "Authentication failed");
     });
 
-    it("Error returned when creating a user and all required props are missing from the request (POST /users)", async function () {
+    it("Error returned when creating a user and all required props are missing from the request", async function () {
       const error = await guard(async () => api.createUser());
 
       expect(error).to.have.property("statusCode", 422);

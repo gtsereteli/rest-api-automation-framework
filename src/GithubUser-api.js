@@ -27,7 +27,6 @@ class GithubUser {
    */
   getUser(username) {
     const path = `${this.baseUrl}/users/${username}`;
-    console.log(path);
     return this.request.get({
       url: path,
     });

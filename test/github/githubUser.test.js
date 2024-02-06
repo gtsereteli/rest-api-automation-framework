@@ -2,6 +2,7 @@ const { expect } = require("chai");
 const Api = require("../../src/GithubUser-api");
 const validateJsonSchema = require('../../utils/jsonSchemaValidator');
 
+// JSON shchemas
 const getUserSchema = require('../../schemas/github/getGithubUserShema.json');
 
 // Variable to hold the instance of the Api class
@@ -19,7 +20,7 @@ before(() => {
  * This test case validates the GitHub User API's ability
  * to retrieve correct user information based on a specific GitHub username
  */
-describe("Can get GitHub user info", function () {
+describe("Can get GitHub user data (GET /users/:username", function () {
   it("Can get user by username", async function () {
     const username = "gtsereteli";
     const response = await api.getUser(username);
