@@ -51,6 +51,7 @@ If you want to run all scenarios present in /test you will need to create author
 - **Trello** : https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/
 - **GoRest:** : https://gorest.co.in/consumer/login
 - **GitHub Users:** : authorization not required
+- **Wheretheiss:** : authorization not required
 
 ### Writing tests
 Below is an example of making a HTTP GET request:
@@ -124,4 +125,4 @@ mocha './**/*.test.js' --reporter mochawesome --reporter-options reportDir=repor
 ```
 
 ## Thanks for checking out my repo! 
-As mentioned above, this is just practice repo and not meant for professional use. Feel free to fork and play around to learn something new and apply to your projects. If you want contribute, pull requests and questions are welcomed.
+As mentioned earlier, this repo is just for practice and not meant for professional use. Feel free to fork it, play around to learn something new, and apply it to your own projects. Contributions, pull requests, and questions are welcome.
