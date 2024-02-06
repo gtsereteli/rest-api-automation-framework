@@ -1,0 +1,61 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Generated schema for Root",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "id": {
+            "type": "number"
+        },
+        "latitude": {
+            "type": "number"
+        },
+        "longitude": {
+            "type": "number"
+        },
+        "altitude": {
+            "type": "number"
+        },
+        "velocity": {
+            "type": "number"
+        },
+        "visibility": {
+            "type": "string"
+        },
+        "footprint": {
+            "type": "number"
+        },
+        "timestamp": {
+            "type": "number"
+        },
+        "daynum": {
+            "type": "number"
+        },
+        "solar_lat": {
+            "type": "number"
+        },
+        "solar_lon": {
+            "type": "number"
+        },
+        "units": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "name",
+        "id",
+        "latitude",
+        "longitude",
+        "altitude",
+        "velocity",
+        "visibility",
+        "footprint",
+        "timestamp",
+        "daynum",
+        "solar_lat",
+        "solar_lon",
+        "units"
+    ]
+}

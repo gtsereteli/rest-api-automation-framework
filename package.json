@@ -7,7 +7,7 @@
     "test": "mocha './**/*.test.js'",
     "test:gorest": "mocha './test/gorest/*.test.js'",
     "test:github": "mocha './test/github/*.test.js'",
-    "test:dummy": "mocha './test/dummy/*.test.js'",
+    "test:iss": "mocha './test/iss/*.test.js'",
     "test:trello": "mocha './test/trello/*.test.js'",
     "test:report": "mocha './**/*.test.js' --reporter mochawesome --reporter-options reportDir=reports",
     "debug": "NODE_DEBUG=request npm run test"
