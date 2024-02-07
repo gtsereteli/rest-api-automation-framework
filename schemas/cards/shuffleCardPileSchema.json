@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Generated schema for Root",
+    "type": "object",
+    "properties": {
+        "success": {
+            "type": "boolean"
+        },
+        "deck_id": {
+            "type": "string"
+        },
+        "remaining": {
+            "type": "number"
+        },
+        "piles": {
+            "type": "object",
+            "properties": {
+                "interview": {
+                    "type": "object",
+                    "properties": {
+                        "remaining": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "remaining"
+                    ]
+                }
+            },
+            "required": [
+                "interview"
+            ]
+        }
+    },
+    "required": [
+        "success",
+        "deck_id",
+        "remaining",
+        "piles"
+    ]
+}
