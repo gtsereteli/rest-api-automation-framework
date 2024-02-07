@@ -36,7 +36,7 @@ This repository contains my own studies and tests on different public APIs. In t
 1. You can run sample test for api which does not require authorization 
 
     ```bash
-    npm run test:github
+    npm run test:cards
     ```
 2. To run all other tests, you will need to generate key/tokens and add these to `.env` file.
 In the `scripts` block of `package.json` you will find all custom commands which you can use
@@ -48,10 +48,12 @@ Some of the APIs in this project require key and token. You will need to provide
 You can use provided tests and APIs or build on top of this project and create tests on other endpoints.
 If you want to run all scenarios present in /test you will need to create authorization for following APIs
 
+- **Deck of Cards** : authorization not required
 - **Trello** : https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/
 - **GoRest:** : https://gorest.co.in/consumer/login
 - **GitHub Users:** : authorization not required
 - **Wheretheiss:** : authorization not required
+
 
 ### Writing tests
 Below is an example of making a HTTP GET request:
