@@ -24,36 +24,23 @@ This repository contains my own studies and tests on different public APIs. In t
     ```bash
     git clone https://github.com/gtsereteli/rest-api-automation-framework.git
     ```
+2. Checkout to `deck-of-cards branch`:
+    ```bash
+    git checkout deck-of-cards
+    ```
 
-2. Install dependencies:
+3. Install dependencies:
 
     ```bash
     npm install
     ```
-3. Copy `.env-template` file and rename it to `.env`
 
 ### Running tests
-1. You can run sample test for api which does not require authorization 
+1. Use custom scripts from the `package.json`
 
     ```bash
     npm run test:cards
     ```
-2. To run all other tests, you will need to generate key/tokens and add these to `.env` file.
-In the `scripts` block of `package.json` you will find all custom commands which you can use
-to quickly run different suites. You can write `npm run {command-name}` to run custom script.
-
-### API authorization
-
-Some of the APIs in this project require key and token. You will need to provide values in `.env` file.
-You can use provided tests and APIs or build on top of this project and create tests on other endpoints.
-If you want to run all scenarios present in /test you will need to create authorization for following APIs
-
-- **Deck of Cards** : authorization not required
-- **Trello** : https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/
-- **GoRest:** : https://gorest.co.in/consumer/login
-- **GitHub Users:** : authorization not required
-- **Wheretheiss:** : authorization not required
-
 
 ### Writing tests
 Below is an example of making a HTTP GET request:

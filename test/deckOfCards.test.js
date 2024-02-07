@@ -1,16 +1,16 @@
 const { expect } = require("chai");
-const Api = require("../../src/Cards-api");
-const guard = require("../../utils/guard");
-const { getCardCodes, getRandomCards, getPileName } = require('../../utils/cardHelper');
-const validateJsonSchema = require('../../utils/jsonSchemaValidator');
+const Api = require("../src/Cards-api");
+const guard = require("../utils/guard");
+const { getCardCodes, getRandomCards, getPileName } = require('../utils/cardHelper');
+const validateJsonSchema = require('../utils/jsonSchemaValidator');
 
 // JSON shchemas
-const shuffleDeckSchema = require('../../schemas/cards/shuffleDeckSchema.json');
-const drawCardsSchema = require('../../schemas/cards/drawCardsSchema.json');
-const drawCardsFromPileSchema = require('../../schemas/cards/drawCardsFromPileSchema.json');
-const getCardPileSchema = require('../../schemas/cards/getCardPileSchema.json');
-const listCardsInPileSchema = require('../../schemas/cards/drawCardsFromPileSchema.json');
-const shuffleCardPileSchema = require('../../schemas/cards/shuffleCardPileSchema.json');
+const shuffleDeckSchema = require('../schemas/cards/shuffleDeckSchema.json');
+const drawCardsSchema = require('../schemas/cards/drawCardsSchema.json');
+const drawCardsFromPileSchema = require('../schemas/cards/drawCardsFromPileSchema.json');
+const getCardPileSchema = require('../schemas/cards/getCardPileSchema.json');
+const listCardsInPileSchema = require('../schemas/cards/drawCardsFromPileSchema.json');
+const shuffleCardPileSchema = require('../schemas/cards/shuffleCardPileSchema.json');
 
 // Variable to hold the instance of the Api class
 let api;
