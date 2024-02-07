@@ -20,7 +20,7 @@ before(() => {
  * This test case validates the GitHub User API's ability
  * to retrieve correct user information based on a specific GitHub username
  */
-describe("Can get GitHub user data (GET /users/:username", function () {
+describe("Can get GitHub user data (GET /users/:username)", function () {
   it("Can get user by username", async function () {
     const username = "gtsereteli";
     const response = await api.getUser(username);

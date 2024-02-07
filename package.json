@@ -8,13 +8,14 @@
     "test:gorest": "mocha './test/gorest/*.test.js'",
     "test:github": "mocha './test/github/*.test.js'",
     "test:iss": "mocha './test/iss/*.test.js'",
+    "test:cards": "mocha './test/cards/*.test.js'",
     "test:trello": "mocha './test/trello/*.test.js'",
     "test:report": "mocha './**/*.test.js' --reporter mochawesome --reporter-options reportDir=reports",
     "debug": "NODE_DEBUG=request npm run test"
   },
   "mocha": {
     "slow": 3000,
-    "timeout": 10000
+    "timeout": 20000
   },
   "keywords": [],
   "author": "Giorgi Tsereteli",
